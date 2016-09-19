@@ -14,8 +14,10 @@ class Chess
     until pos
       system("clear")
       @display.render
-      pos = @display.cursor.get_input
+      start_pos = @display.cursor.get_input
     end
+
+    # board.move(pos)
   end
 end
 

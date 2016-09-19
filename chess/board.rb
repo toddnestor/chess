@@ -42,7 +42,7 @@ class Board
   end
 
   def in_bounds?(pos)
-    (0..8).cover?(pos[0]) && (0..8).cover?(pos[1])
+    (0..7).cover?(pos[0]) && (0..7).cover?(pos[1])
   end
 
   alias_method :rows, :grid
@@ -53,8 +53,10 @@ class Board
       Array.new(8) { NullPiece.new }
      end
 
-     piece = Piece.new
-     self[[0,0]] = piece
+     self[[0,0]] = Piece.new("\u2654", :white)
+     self[[0,1]] = Piece.new("\u2654", :white)
+     self[[1,0]] = Piece.new("\u265a", :black)
+     self[[1,1]] = Piece.new("\u265a", :black)
   end
 end
 
