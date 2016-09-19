@@ -20,6 +20,18 @@ class Board
     piece.pos = pos
   end
 
+  def each_with_index(&prc)
+    @grid.each_with_index do |row, row_index|
+      row.each_with_index do |piece, col|
+        prc.call piece, [row_index, col]
+      end
+    end
+  end
+
+  def each_row(&prc)
+    rows.each_with_index {|row, row_index| prc.call(row, row_index)}
+  end
+
   def move(start, end_pos)
     piece = self[start]
     raise "no piece at start" if piece.is_a?(NullPiece)
@@ -29,9 +41,7 @@ class Board
     self[end_pos] = piece
   end
 
-  def render
-    p @grid
-  end
+  alias_method :rows, :grid
 
   private
   def setup_board
