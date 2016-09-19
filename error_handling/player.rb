@@ -1,3 +1,6 @@
+class UserInputError < ArgumentError
+end
+
 class HumanPlayer
   attr_accessor :previous_guess
 

@@ -29,9 +29,7 @@ class MemoryGame
   def get_player_input
     pos = nil
 
-    until pos && valid_pos?(pos)
-      pos = player.get_input
-    end
+    pos = player.get_input
 
     pos
   end
@@ -54,8 +52,14 @@ class MemoryGame
   def play
     until board.won?
       board.render
-      pos = get_player_input
-      make_guess(pos)
+      begin
+        pos = get_player_input
+        raise UserInputError unless valid_pos?(pos)
+        make_guess(pos)
+      rescue UserInputError, ArgumentError
+        puts "You're a moron, try again!"
+        retry
+      end
     end
 
     puts "Congratulations, you win!"
@@ -74,5 +78,5 @@ end
 
 if __FILE__ == $PROGRAM_NAME
   size = ARGV.empty? ? 4 : ARGV.shift.to_i
-  MemoryGame.new(ComputerPlayer.new(size), size).play
+  MemoryGame.new(HumanPlayer.new(size), size).play
 end
