@@ -89,8 +89,23 @@ class Cursor
   end
 
   def update_pos(diff)
-    @cursor_pos[0] += diff[0]
-    @cursor_pos[1] += diff[1]
+    new_pos = []
+    new_pos << @cursor_pos[0] + diff[0]
+    new_pos << @cursor_pos[1] + diff[1]
+
+    if @board.in_bounds?(new_pos)
+      @cursor_pos = new_pos
+    else
+      @cursor_pos = wrap_around(new_pos)
+    end
     nil
+  end
+
+  def wrap_around(new_pos)
+    new_pos[0] = 0 if new_pos[0] > 7
+    new_pos[0] = 7 if new_pos[0] < 0
+    new_pos[1] = 0 if new_pos[1] > 7
+    new_pos[1] = 7 if new_pos[1] < 0
+    new_pos
   end
 end

@@ -41,6 +41,10 @@ class Board
     self[end_pos] = piece
   end
 
+  def in_bounds?(pos)
+    (0..8).cover?(pos[0]) && (0..8).cover?(pos[1])
+  end
+
   alias_method :rows, :grid
 
   private
