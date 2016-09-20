@@ -11,7 +11,7 @@ class Piece
   end
 
   def dup(board)
-    Piece.new(board, @pos.dup)
+    self.class.new(board, @pos.dup)
   end
 
   def pos=(pos)

@@ -8,8 +8,7 @@ require_relative 'pieces/queen'
 require_relative 'pieces/rook'
 
 class Board
-  attr_accessor :selected_piece
-  attr_reader :grid
+  attr_accessor :selected_piece, :grid
 
   def initialize
     setup_board
@@ -82,6 +81,17 @@ class Board
     (0..7).cover?(pos[0]) && (0..7).cover?(pos[1])
   end
 
+  def deep_dup
+    duped_board = self.dup
+    duped_board.grid = empty_board
+
+    each_piece do |piece|
+      duped_piece = piece.dup(duped_board)
+    end
+
+    duped_board
+  end
+
   alias_method :rows, :grid
 
   private
@@ -95,17 +105,6 @@ class Board
     @grid = empty_board
 
      set_pieces
-  end
-
-  def deep_dup
-    duped_board = self.dup
-    duped_board.grid = empty_board
-
-    each_piece do |piece|
-      duped_piece = piece.dup(duped_board)
-    end
-
-    duped_board
   end
 
   def set_pieces
