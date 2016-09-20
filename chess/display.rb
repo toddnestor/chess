@@ -10,15 +10,15 @@ class Display
   end
 
   def render
+    str = ""
     @board.each_row do |row, row_index|
-      str = ""
       row.each_with_index do |piece, col_index|
         pos = [row_index, col_index]
         str << square_bg(piece, pos)
       end
-      puts str
+      str << "\n"
     end
-
+    puts str
     p @cursor.cursor_pos
     # p @board.in_check?(:black)
     # p @board.in_check?(:white)
