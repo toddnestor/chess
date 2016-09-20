@@ -11,4 +11,8 @@ class Bishop < Piece
   def black_symbol
     "\u265d"
   end
+
+  def move_diffs
+    diagonal_moves
+  end
 end

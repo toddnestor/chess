@@ -15,7 +15,11 @@ class Piece
   end
 
   def can_move_to(pos)
-    true
+    @board.in_bounds?(pos) && (@board[pos].nil? || piece_is_opposite(@board[pos]))
+  end
+
+  def piece_is_opposite(piece)
+    piece.color != @color
   end
 
   def to_s

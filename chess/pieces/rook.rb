@@ -11,4 +11,8 @@ class Rook < Piece
   def black_symbol
     "\u265c"
   end
+
+  def move_diffs
+    orthogonal_moves
+  end
 end

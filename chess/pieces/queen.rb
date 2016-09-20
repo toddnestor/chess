@@ -11,4 +11,8 @@ class Queen < Piece
   def black_symbol
     "\u265b"
   end
+
+  def move_diffs
+    orthogonal_moves + diagonal_moves
+  end
 end
