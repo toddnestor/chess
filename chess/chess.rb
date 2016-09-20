@@ -29,6 +29,7 @@ class Chess
   def select_piece
     pos = get_input
     piece = @board[pos]
+    piece.toggle_select
     raise "no piece at start" if piece.nil?
     piece
   end
@@ -38,8 +39,10 @@ class Chess
     until pos && piece.moves.include?(pos)
       pos = get_input
     end
+    piece.toggle_select
     piece.pos = pos
   end
+
 end
 
 if __FILE__ == $PROGRAM_NAME

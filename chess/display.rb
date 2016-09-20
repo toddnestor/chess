@@ -24,12 +24,13 @@ class Display
 
   private
   def square_bg(piece, pos)
-    return piece.to_s.on_blue if pos == @cursor.cursor_pos
-
+    str = piece.to_s
+    return str.on_blue if pos == @cursor.cursor_pos
+    return str.on_light_black if piece.selected
     if pos.reduce(:+).even?
-      piece.to_s.on_light_blue
+      str.on_light_blue
     else
-      piece.to_s.on_light_red
+      str.on_light_red
     end
   end
 end

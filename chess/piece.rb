@@ -1,5 +1,5 @@
 class Piece
-  attr_accessor :pos
+  attr_accessor :pos, :selected
   attr_reader :symbol, :color
 
   def initialize(board, pos)
@@ -7,6 +7,7 @@ class Piece
     self.pos = pos
     set_color
     set_symbol
+    @selected = false
   end
 
   def pos=(pos)
@@ -23,7 +24,20 @@ class Piece
   end
 
   def to_s
-    " #{@symbol} ".colorize(@color)
+    str = " #{@symbol} ".colorize(@color)
+    str
+  end
+
+  def toggle_select
+    @selected = !@selected
+  end
+
+  def row
+    @pos[0]
+  end
+
+  def col
+    @pos[1]
   end
 
   def nil?
