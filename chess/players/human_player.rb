@@ -8,6 +8,7 @@ class HumanPlayer < Player
   end
 
   def select_piece(game)
+
     piece = nil
 
     until piece
@@ -37,8 +38,10 @@ class HumanPlayer < Player
   def get_input(game)
     pos = nil
     until pos
-      system("clear")
+      # system("clear")
       game.display.render
+      game.inform_turn
+      game.inform_in_check
       pos = game.display.cursor.get_input
     end
     pos

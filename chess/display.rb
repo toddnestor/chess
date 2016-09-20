@@ -10,6 +10,7 @@ class Display
   end
 
   def render
+    system("clear")
     str = ""
     @board.each_row do |row, row_index|
       row.each_with_index do |piece, col_index|
@@ -19,11 +20,6 @@ class Display
       str << "\n"
     end
     puts str
-    p @cursor.cursor_pos
-    puts "black is in check"
-    p @board.in_check?(:black)
-    puts "white is in check"
-    p @board.in_check?(:white)
   end
 
   private

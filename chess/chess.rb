@@ -13,8 +13,10 @@ class Chess
 
   def play
     until game_over?
+      @display.render
       take_turn
       switch_turns
+      inform_in_check
     end
     @display.render
     winner_and_loser
@@ -32,10 +34,25 @@ class Chess
     @players[0]
   end
 
+  def white
+    @players.find {|player| player.color == :white}
+  end
+
+  def black
+    @players.find {|player| player.color == :black}
+  end
+
+  def inform_in_check
+    puts "#{white}: you're in check" if @board.in_check?(:white)
+    puts "#{black}: you're in check" if @board.in_check?(:black)
+  end
+
+  def inform_turn
+    puts "#{current_player}, it's your turn, you are #{current_player.color}"
+  end
+
   private
   def take_turn
-    # piece_pos = select_piece
-    # select_move(piece_pos)
     move_pos, piece = nil
 
     until piece
