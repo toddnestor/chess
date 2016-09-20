@@ -20,6 +20,8 @@ class Display
     end
 
     p @cursor.cursor_pos
+    p @board.in_check?(:black)
+    p @board.in_check?(:white)
   end
 
   private

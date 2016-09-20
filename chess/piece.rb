@@ -49,7 +49,7 @@ class Piece
 
   private
   def set_color
-    if(pos[0] < 2)
+    if(row < 2)
       @color = :white
     else
       @color = :black

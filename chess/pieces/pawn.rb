@@ -16,7 +16,7 @@ class Pawn < Piece
     move_diffs.each do |diff|
       pos = position_from_diff(diff)
       piece = @board[pos]
-      valid_moves << pos if piece.nil?
+      valid_moves << pos if piece.nil? && @board.in_bounds?(pos)
     end
 
     valid_moves + enemy_positions
@@ -33,7 +33,7 @@ class Pawn < Piece
     diffs.each do |diff|
       pos = position_from_diff(diff)
       piece = @board[pos]
-      valid_moves << pos if !piece.nil? || piece_is_opposite(piece)
+      valid_moves << pos if can_move_to?(pos)
     end
 
     valid_moves

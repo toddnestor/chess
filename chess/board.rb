@@ -37,6 +37,33 @@ class Board
     rows.each_with_index {|row, row_index| prc.call(row, row_index)}
   end
 
+  def each_piece(color, &prc)
+    each_row do |row|
+      row.each do |piece|
+        prc.call(piece) if !piece.nil? && piece.color == color
+      end
+    end
+  end
+
+  def king(color)
+    each_piece(color) do |piece|
+      return piece if piece.is_a? King
+    end
+  end
+
+  def in_check?(color)
+    king_pos = king(color).pos
+
+    each_piece(get_opposite_color(color)) do |piece|
+      return true if piece.moves.include?(king_pos)
+    end
+    false
+  end
+
+  def get_opposite_color(color)
+    color == :black ? :white : :black
+  end
+
   def in_bounds?(pos)
     (0..7).cover?(pos[0]) && (0..7).cover?(pos[1])
   end
@@ -44,12 +71,25 @@ class Board
   alias_method :rows, :grid
 
   private
-  def setup_board
-    @grid = Array.new(8) do
+  def empty_board
+    Array.new(8) do
       Array.new(8) { NullPiece.instance }
-     end
+    end
+  end
+
+  def setup_board
+    @grid = empty_board
 
      set_pieces
+  end
+
+  def dup
+    duped_board = self.dup
+    # logic to make new board
+
+    # new_board each piece.board = new_board
+
+    duped_board
   end
 
   def set_pieces
