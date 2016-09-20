@@ -33,7 +33,9 @@ class Pawn < Piece
     diffs.each do |diff|
       pos = position_from_diff(diff)
       piece = @board[pos]
-      valid_moves << pos if can_move_to?(pos)
+      if @board.in_bounds?(pos) && !piece.nil? && piece_is_opposite(piece)
+        valid_moves << pos
+      end
     end
 
     valid_moves

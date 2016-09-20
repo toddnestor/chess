@@ -8,10 +8,12 @@ require_relative 'pieces/queen'
 require_relative 'pieces/rook'
 
 class Board
+  attr_accessor :selected_piece
   attr_reader :grid
 
   def initialize
     setup_board
+    @selected_piece = nil
   end
 
   def [](pos)
@@ -37,12 +39,19 @@ class Board
     rows.each_with_index {|row, row_index| prc.call(row, row_index)}
   end
 
-  def each_piece(color, &prc)
+  def each_piece(color=nil, &prc)
     each_row do |row|
       row.each do |piece|
-        prc.call(piece) if !piece.nil? && piece.color == color
+        if !piece.nil? && (!color || piece.color == color)
+          prc.call(piece)
+        end
       end
     end
+  end
+
+  def move(start_pos, end_pos)
+    piece = self[start_pos]
+    piece.pos = end_pos
   end
 
   def king(color)
@@ -58,6 +67,11 @@ class Board
       return true if piece.moves.include?(king_pos)
     end
     false
+  end
+
+  def checkmate?(color)
+    each_piece(color) {|piece| return false unless piece.valid_moves.empty?}
+    true
   end
 
   def get_opposite_color(color)
@@ -83,11 +97,13 @@ class Board
      set_pieces
   end
 
-  def dup
+  def deep_dup
     duped_board = self.dup
-    # logic to make new board
+    duped_board.grid = empty_board
 
-    # new_board each piece.board = new_board
+    each_piece do |piece|
+      duped_piece = piece.dup(duped_board)
+    end
 
     duped_board
   end

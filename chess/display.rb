@@ -20,8 +20,8 @@ class Display
     end
 
     p @cursor.cursor_pos
-    p @board.in_check?(:black)
-    p @board.in_check?(:white)
+    # p @board.in_check?(:black)
+    # p @board.in_check?(:white)
   end
 
   private
@@ -29,6 +29,13 @@ class Display
     str = piece.to_s
     return str.on_blue if pos == @cursor.cursor_pos
     return str.on_light_black if piece.selected
+
+    if @board.selected_piece
+      if @board.selected_piece.moves.include? pos
+        return str.on_light_green
+      end
+    end
+
     if pos.reduce(:+).even?
       str.on_light_blue
     else

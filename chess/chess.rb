@@ -27,14 +27,28 @@ class Chess
   end
 
   def take_turn
-    piece_pos = select_piece
-    select_move(piece_pos)
+    # piece_pos = select_piece
+    # select_move(piece_pos)
+    move_pos, piece = nil
+
+    until piece
+      piece = select_piece
+
+      move_pos = select_move(piece)
+      if move_pos == piece.pos
+        piece.unselect
+        piece, move_pos = nil
+      end
+    end
+    piece.pos = move_pos unless piece.nil?
+    piece.unselect
+
   end
 
   def select_piece
     pos = get_input
     piece = @board[pos]
-    piece.toggle_select
+    piece.select
     raise "no piece at start" if piece.nil?
     piece
     rescue
@@ -46,14 +60,9 @@ class Chess
 
     until pos && piece.moves.include?(pos)
       pos = get_input
-      if pos == piece.pos
-        piece.toggle_select
-        take_turn
-      end
+      return pos if piece.pos == pos
     end
-
-    piece.toggle_select
-    piece.pos = pos
+    pos
   end
 
 end

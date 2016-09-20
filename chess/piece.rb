@@ -10,6 +10,10 @@ class Piece
     @selected = false
   end
 
+  def dup(board)
+    Piece.new(board, @pos.dup)
+  end
+
   def pos=(pos)
     @board[pos] = self
     @pos = pos
@@ -28,8 +32,14 @@ class Piece
     str
   end
 
-  def toggle_select
-    @selected = !@selected
+  def select
+    @selected = true
+    @board.selected_piece = self
+  end
+
+  def unselect
+    @selected = false
+    @board.selected_piece = nil
   end
 
   def row
@@ -42,6 +52,16 @@ class Piece
 
   def nil?
     false
+  end
+
+  def move_into_check?(pos)
+    duped_board = @board.deep_dup
+    duped_board.move(@pos, pos)
+    duped_board.in_check?(@color)
+  end
+
+  def valid_moves
+    moves.reject { |move| move_into_check?(move) }
   end
 
   def moves
