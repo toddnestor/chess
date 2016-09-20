@@ -16,6 +16,16 @@ class Chess
       take_turn
       switch_turns
     end
+    @display.render
+    winner_and_loser
+  end
+
+  def winner_and_loser
+    if @board.checkmate?(:white)
+      puts "white lost"
+    else
+      puts "black lost"
+    end
   end
 
   def current_player

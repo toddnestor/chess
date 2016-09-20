@@ -20,8 +20,10 @@ class Display
     end
     puts str
     p @cursor.cursor_pos
-    # p @board.in_check?(:black)
-    # p @board.in_check?(:white)
+    puts "black is in check"
+    p @board.in_check?(:black)
+    puts "white is in check"
+    p @board.in_check?(:white)
   end
 
   private
@@ -31,7 +33,7 @@ class Display
     return str.on_light_black if piece.selected
 
     if @board.selected_piece
-      if @board.selected_piece.moves.include? pos
+      if @board.selected_piece.valid_moves.include? pos
         return str.on_light_green
       end
     end

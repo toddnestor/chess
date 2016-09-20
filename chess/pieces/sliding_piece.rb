@@ -13,6 +13,7 @@ module SlidingPiece
     move = get_next_pos(@pos.dup, diff)
     while can_move_to?(move)
       new_moves << move
+      break unless @board[move].nil?
       move = get_next_pos(move, diff)
     end
 

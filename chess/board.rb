@@ -57,11 +57,11 @@ class Board
     each_piece(color) do |piece|
       return piece if piece.is_a? King
     end
+    nil
   end
 
   def in_check?(color)
     king_pos = king(color).pos
-
     each_piece(get_opposite_color(color)) do |piece|
       return true if piece.moves.include?(king_pos)
     end
@@ -82,25 +82,25 @@ class Board
   end
 
   def deep_dup
-    duped_board = self.dup
-    duped_board.grid = empty_board
+    duped_board = Board.new
+    duped_board.grid = duped_board.empty_board
 
     each_piece do |piece|
-      duped_piece = piece.dup(duped_board)
+      piece.dup(duped_board)
     end
 
     duped_board
   end
 
-  alias_method :rows, :grid
-
-  private
   def empty_board
     Array.new(8) do
       Array.new(8) { NullPiece.instance }
     end
   end
 
+  alias_method :rows, :grid
+
+  private
   def setup_board
     @grid = empty_board
 

@@ -26,7 +26,7 @@ class HumanPlayer < Player
   def select_move(piece, game)
     pos = nil
 
-    until pos && piece.moves.include?(pos)
+    until pos && piece.valid_moves.include?(pos)
       pos = get_input(game)
       return pos if piece.pos == pos
     end
