@@ -86,7 +86,7 @@ if __FILE__ == $PROGRAM_NAME
   puts "What is player two? Enter 1 for human, 2 for computer"
   prompt2 = gets.chomp.to_i
 
-  player_2 = (prompt2 == 1 ? HumanPlayer.new(:white) : ComputerPlayer.new(:white))
+  player_2 = (prompt2 == 1 ? HumanPlayer.new(:black) : ComputerPlayer.new(:black))
   game = Chess.new(player_1, player_2)
   game.play
 end

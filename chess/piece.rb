@@ -55,7 +55,12 @@ class Piece
     false
   end
 
-  def move_into_check?(pos)
+  def opponent_color
+    @color == :white ? :black : :white
+  end
+
+  def move_into_check?(pos, color = nil)
+    color ||= @color
     duped_board = @board.deep_dup
     duped_board.move(@pos, pos)
     duped_board.in_check?(@color)
@@ -63,7 +68,35 @@ class Piece
 
   def valid_moves
     moves.reject do |move|
-      move_into_check?(move)
+      move_into_check?(move, )
+    end
+  end
+
+  def has_checking_move?
+    valid_moves.each do |move|
+      return true if move_into_check?(move, opponent_color)
+    end
+    false
+  end
+
+  def has_killing_move?
+    valid_moves.each do |move|
+      piece = @board[move]
+      return true if !piece.nil? && piece_is_opposite(piece)
+    end
+    false
+  end
+
+  def checking_moves
+    valid_moves.select do |move|
+      move_into_check?(move, opponent_color)
+    end
+  end
+
+  def killing_moves
+    valid_moves.select do |move|
+      piece = @board[move]
+      !piece.nil? && piece_is_opposite(piece)
     end
   end
 
