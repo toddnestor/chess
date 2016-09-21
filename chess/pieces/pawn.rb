@@ -10,6 +10,11 @@ class Pawn < Piece
     "\u265f"
   end
 
+  def pos=(pos)
+    super
+    make_queen if at_other_side
+  end
+
   def moves
     valid_moves = []
 
@@ -71,5 +76,16 @@ class Pawn < Piece
     end
   end
 
-  # if !piece.nil? || piece_is_opposite(piece)
+  private
+  def at_other_side
+    if @color == :white
+      row == 7
+    else
+      row == 0
+    end
+  end
+
+  def make_queen
+    Queen.new(@board, @pos, @color)
+  end
 end

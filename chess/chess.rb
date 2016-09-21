@@ -1,6 +1,7 @@
 require_relative 'board'
 require_relative 'display'
 require_relative 'players/human_player'
+require_relative 'players/computer_player'
 
 class Chess
   attr_accessor :board, :players, :display
@@ -79,6 +80,6 @@ end
 
 if __FILE__ == $PROGRAM_NAME
 
-  game = Chess.new(HumanPlayer.new(:white), HumanPlayer.new(:black))
+  game = Chess.new(ComputerPlayer.new(:white), ComputerPlayer.new(:black))
   game.play
 end
