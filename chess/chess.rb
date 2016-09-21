@@ -79,7 +79,14 @@ class Chess
 end
 
 if __FILE__ == $PROGRAM_NAME
+  puts "What is player one? Enter 1 for human, 2 for computer"
+  prompt1 = gets.chomp.to_i
+  player_1 = (prompt1 == 1 ? HumanPlayer.new(:white) : ComputerPlayer.new(:white))
 
-  game = Chess.new(ComputerPlayer.new(:white), ComputerPlayer.new(:black))
+  puts "What is player two? Enter 1 for human, 2 for computer"
+  prompt2 = gets.chomp.to_i
+
+  player_2 = (prompt2 == 1 ? HumanPlayer.new(:white) : ComputerPlayer.new(:white))
+  game = Chess.new(player_1, player_2)
   game.play
 end

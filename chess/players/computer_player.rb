@@ -15,6 +15,14 @@ class ComputerPlayer < Player
   end
 
   def select_move(piece, game)
-    piece.valid_moves.first
+    killing_move(piece, game) || random_move(piece)
+  end
+
+  def killing_move(piece, game)
+
+  end
+
+  def random_move(piece)
+    piece.valid_moves.sample
   end
 end
