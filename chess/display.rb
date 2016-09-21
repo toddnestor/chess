@@ -25,7 +25,13 @@ class Display
   private
   def square_bg(piece, pos)
     str = piece.to_s
-    return str.on_blue if pos == @cursor.cursor_pos
+    if pos == @cursor.cursor_pos
+      if piece.nil?
+        return " \u2659 ".colorize(:blue).on_blue
+      else
+        return str.on_blue
+      end
+    end
     return str.on_light_black if piece.selected
 
     if @board.selected_piece
@@ -35,9 +41,9 @@ class Display
     end
 
     if pos.reduce(:+).even?
-      str.on_light_blue
+      piece.nil? ? " \u2659 ".colorize(:green).on_green : piece.to_s.on_green
     else
-      str.on_light_red
+      piece.nil? ? " \u2659 ".colorize(:yellow).on_yellow : piece.to_s.on_yellow
     end
   end
 end

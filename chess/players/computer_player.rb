@@ -61,6 +61,7 @@ class ComputerPlayer < Player
   end
 
   def select_move(piece, game)
+    sleep(1)
     checking_move(piece) || killing_move(piece) || random_move(piece)
   end
 
